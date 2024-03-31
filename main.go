@@ -9,8 +9,9 @@ import {
 }
 
 func main {
-	pref := os.Getenv("TOKEN"),
-	Poller: &tele.LongPoller{Timeout: 10 * time.Second},
+	pref := tele.Settings{
+		Token: os.Getenv("TOKEN"),
+		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
 }
 
 b, err := tele.NewBot(pref)
