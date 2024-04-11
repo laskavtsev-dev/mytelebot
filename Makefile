@@ -1,9 +1,11 @@
 VERSION := $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
-APP := $(shell basename $(shell git remote get-url origin) | tr '[:upper:]' '[:lower:]')
+APP := $(shell basename $(shell git remote get-url origin) | tr '[:upper:]' '[:lower:]' | sed 's/\.git$$//')
+REGISTRY := laskavtsev
 
 OS := macos
 ARCH := arm64
-IMAGENAME := ${OS}/${APP}:${VERSION}-${ARCH}
+#ARCH := amd64
+IMAGENAME := ${REGISTRY}/${APP}:${VERSION}-${ARCH}
 
 get:
 	go get
@@ -35,6 +37,9 @@ windows: format
 
 image:
 	docker build . -t ${IMAGENAME}
+
+push:
+	docker push ${IMAGENAME}
 
 clean:
 	rm -rf MyTeleBot
