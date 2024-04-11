@@ -1,6 +1,6 @@
 VERSION := $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 APP := $(shell basename $(shell git remote get-url origin) | tr '[:upper:]' '[:lower:]' | sed 's/\.git$$//')
-REGISTRY := laskavtsev
+REGISTRY := gcr.io/mytelebot
 
 OS := macos
 #OS := windows
