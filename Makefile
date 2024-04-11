@@ -1,7 +1,7 @@
 VERSION := $(shell git rev-parse --short HEAD)
-APP := $((shell basename $(shell git remote get-url origin)) | awk '{print tolower($0)}')
+APP := $((shell basename $(shell git remote get-url origin)) | shell awk '{print tolower($0)}')
 OS := macos
-ARCH := amd64
+ARCH := arm64
 
 get:
 	go get
@@ -25,8 +25,7 @@ arm: format
 
 macos: format
 	go get gopkg.in/telebot.v3
-	CGO_ENABLED=0 GOOS=darwin GOARCH=$(ARCH) go build -v
-	 -o MyTeleBot -ldflags "-X="https://github.com/laskavtsev-dev/MyTeleBot/cmd.appVersion=$(VERSION)
+	CGO_ENABLED=0 GOOS=darwin GOARCH=$(ARCH) go build -v -o MyTeleBot -ldflags "-X="https://github.com/laskavtsev-dev/MyTeleBot/cmd.appVersion=$(VERSION)
 
 windows: format
 	go get gopkg.in/telebot.v3
