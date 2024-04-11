@@ -3,6 +3,7 @@ APP := $(shell basename $(shell git remote get-url origin) | tr '[:upper:]' '[:l
 REGISTRY := laskavtsev
 
 OS := macos
+#OS := windows
 ARCH := arm64
 #ARCH := amd64
 IMAGENAME := ${REGISTRY}/${APP}:${VERSION}-${ARCH}

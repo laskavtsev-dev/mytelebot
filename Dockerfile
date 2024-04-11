@@ -1,12 +1,11 @@
 FROM quay.io/projectquay/golang:1.20 as builder
 
-WORKDIR /cmd
+WORKDIR /go/src/app
 COPY . .
-#RUN go get
 RUN make macos
 
 FROM scratch
 WORKDIR /
-COPY --from=builder /cmd/MyTeleBot .
+COPY --from=builder /go/src/app/MyTeleBot .
 COPY --from=alpine:latest /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
 ENTRYPOINT [ "./MyTeleBot" ]
