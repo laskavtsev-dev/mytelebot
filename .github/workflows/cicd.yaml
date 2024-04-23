@@ -9,7 +9,7 @@ jobs:
   ci:
     name: ci
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Check
       uses: actions/checkout@v3
