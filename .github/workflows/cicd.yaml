@@ -20,5 +20,5 @@ jobs:
 
     - name: Build&Push
        env:
-         APP: "mytelebot"
+        APP: "mytelebot"
        run: make image push
