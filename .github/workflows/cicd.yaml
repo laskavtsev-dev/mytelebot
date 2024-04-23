@@ -1,4 +1,4 @@
-name: MYTELEBOT-CICD
+name: MyCICD
 on:
   push:
     branches:
