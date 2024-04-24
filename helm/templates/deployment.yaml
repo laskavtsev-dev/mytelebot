@@ -24,6 +24,7 @@ spec:
       dnsConfig:
         nameservers:
           - 1.1.1.1
+            8.8.8.8
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
