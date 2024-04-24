@@ -46,7 +46,7 @@ jobs:
         cmd: yq -i '.image.tag=strenv(VERSION) | .image.os=strenv(TARGETOS) | .image.arch=strenv(TARGETARCH)' helm/values.yaml
 
     - run: |
-        git config user.name ${{ github.actor }}
+        git config user.name laskavtsev
         git config user.email las@agrain.ua
         git commit -am "update version $VERSION"
         git push          
