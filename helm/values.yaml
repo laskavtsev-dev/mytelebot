@@ -5,7 +5,7 @@
 replicaCount: 1
 image:
   repository: laskavtsev
-  tag: "v1.6.0-1732a21"
+  tag: "v1.6.0-349c24b"
   arch: ""
   os: ""
 # Додатково визначте секцію для токену TELE_TOKEN
