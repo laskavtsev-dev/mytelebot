@@ -7,8 +7,8 @@ image:
   registry: "ghcr.io"
   repository: "laskavtsev-dev/mytelebot"
   tag: "v1.6.0-ee3630e"
-  os: ""
-  arch: ""
+  os: "linux"
+  arch: "amd64"
 # Додатково визначте секцію для токену TELE_TOKEN
 secret:
   name: "mytelebot"
