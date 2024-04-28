@@ -11,7 +11,7 @@ image:
   arch: "amd64"
 # Додатково визначте секцію для токену TELE_TOKEN
 secret:
-  name: "mytelebot"
+  name: "mytlebot"
   env: "TELE_TOKEN"
   key: "token"
 securityContext:
