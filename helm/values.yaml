@@ -6,7 +6,7 @@ replicaCount: 1
 image:
   registry: "ghcr.io"
   repository: "laskavtsev-dev/mytelebot"
-  tag: "v1.6.0-3e3e7f8"
+  tag: "v1.6.0-2da6a25"
   os: "linux"
   arch: "amd64"
 # Додатково визначте секцію для токену TELE_TOKEN
