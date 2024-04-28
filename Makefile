@@ -7,7 +7,7 @@ OS := linux
 #OS := windows
 #ARCH := arm64
 ARCH := amd64
-IMAGENAME := ${REGISTRY}/${APP}:${VERSION}-${ARCH}
+IMAGENAME := ${REGISTRY}/${APP}:${VERSION}-${OS}-${ARCH}
 
 get:
 	go get
