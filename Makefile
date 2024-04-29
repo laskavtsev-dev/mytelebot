@@ -3,7 +3,6 @@ APP := $(shell basename $(shell git remote get-url origin) | tr '[:upper:]' '[:l
 REGISTRY := ghcr.io/laskavtsev-dev
 
 OS := linux
-#A := B
 #OS := windows
 #ARCH := arm64
 ARCH := amd64
@@ -46,3 +45,6 @@ push:
 clean:
 	rm -rf MyTeleBot
 	docker rmi ${IMAGENAME}
+
+show:
+	echo ${VERSION}
