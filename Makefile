@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-VERSION := $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
-#VERSION := v1.0.5-$(shell git rev-parse --short HEAD)
-=======
 #VERSION := $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 VERSION := v1.0.6-$(shell git rev-parse --short HEAD)
->>>>>>> c436741 (Push)
 APP := $(shell basename $(shell git remote get-url origin) | tr '[:upper:]' '[:lower:]' | sed 's/\.git$$//')
 REGISTRY := ghcr.io/laskavtsev-dev
 
