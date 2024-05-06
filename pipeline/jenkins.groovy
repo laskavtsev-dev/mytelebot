@@ -27,20 +27,20 @@ pipeline {
             }
         }
 
-        stage('build') {
-            steps {
-                echo "Будуємо бінарник під платфору ${params.OS} для архітектури ${params.ARCH}"
-                sh "make ${params.OS} ${params.ARCH}"
-            }
-        }
-
         stage('image') {
             steps {
                 echo "Будуємо образ під платформу ${params.OS} для архітектури ${params.ARCH}"
                 sh "make image-${params.OS} ${params.ARCH}"
             }
         }
-        
+
+        stage('build') {
+            steps {
+                echo "Будуємо бінарник під платфору ${params.OS} для архітектури ${params.ARCH}"
+                sh "make ${params.OS} ${params.ARCH}"
+            }
+        }
+       
         stage('login to GHCR') {
             steps {
                 sh "echo $GITHUB_TOKEN_PSW | docker login ghcr.io -u $GITHUB_TOKEN_USR --password-stdin"
