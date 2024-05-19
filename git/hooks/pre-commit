@@ -94,31 +94,36 @@ install_gitleaks() {
       ;;
   esac
 
-  echo "Downloading gitleaks from $URL..."
+   echo "Downloading gitleaks from $URL..."
   if [ "$OS" = "Windows" ]; then
-    curl -sSL $URL -o gitleaks.exe
-    mkdir -p "%LOCALAPPDATA%/gitleaks"
-    move gitleaks.exe "%LOCALAPPDATA%/gitleaks/gitleaks.exe"
-    GITLEAKS_PATH="%LOCALAPPDATA%/gitleaks/gitleaks.exe"
+    powershell -Command "
+      \$client = new-object System.Net.WebClient;
+      \$client.DownloadFile('$URL', 'gitleaks.exe');
+      if (!(Test-Path -Path \$env:LOCALAPPDATA\gitleaks)) { New-Item -ItemType Directory -Path \$env:LOCALAPPDATA\gitleaks };
+      Move-Item -Path gitleaks.exe -Destination \$env:LOCALAPPDATA\gitleaks\gitleaks.exe;
+    "
   else
     curl -sSL $URL -o gitleaks
     chmod +x gitleaks
     sudo mv gitleaks /usr/local/bin/gitleaks
-    GITLEAKS_PATH="gitleaks"
   fi
 }
 
-# Перевіряємо, чи встановлено gitleaks
-if ! command -v gitleaks >/dev/null 2>&1 && ! command -v "$LOCALAPPDATA/gitleaks/gitleaks.exe" >/dev/null 2>&1; then
-  echo "Gitleaks not found, installing..."
-  install_gitleaks
-else
-  if [ "$OS" = "Windows" ]; then
-    GITLEAKS_PATH="$LOCALAPPDATA/gitleaks/gitleaks.exe"
-  else
-    GITLEAKS_PATH="gitleaks"
-  fi
-  echo "Gitleaks is already installed"
-fi
+detect_os
 
-exit 0
+#Перевіряємо, чи гітлікс інстальовано, та якщо ні - інсталюємо (основна процедура)
+if [ "$OS" = "Windows" ]; then
+  if ! powershell -Command "Test-Path -Path \$env:LOCALAPPDATA\gitleaks\gitleaks.exe" ; then
+    echo "Gitleaks not found, installing..."
+    install_gitleaks
+  else
+    echo "Gitleaks is already installed"
+  fi
+else
+  if ! command -v gitleaks >/dev/null 2>&1; then
+    echo "Gitleaks not found, installing..."
+    install_gitleaks
+  else
+    echo "Gitleaks is already installed"
+  fi
+fi
