@@ -14,5 +14,6 @@ secret:
   name: "mytelebot"
   env: "TELE_TOKEN"
   key: "token"
+  value: asdhfkjasdhfjkahdsfjiorheihdjni342ier8hf98h239r=
 securityContext:
   privileged: true
