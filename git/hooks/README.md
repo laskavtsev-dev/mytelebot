@@ -55,6 +55,7 @@ Fingerprint: helm/values.yaml:github-pat:17
 12:58PM INF scan completed in 13.9ms
 12:58PM WRN leaks found: 1
 ```
+![gitleaks_VSCode](.gitleaks.PNG)
 
 5. Створимо pre-commit-hook для автоматичного встановлення gitleaks на різних операційних системах:
 ```bash
