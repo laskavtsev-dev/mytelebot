@@ -1,5 +1,5 @@
 1. Встановлюємо pre-commit:
-
+```bash
 $ sudo apt-get install pre-commit
 
 $ pre-commit --version
@@ -8,7 +8,7 @@ pre-commit 2.17.0
 $ touch .pre-commit-config.yaml
 
 $ nano .pre-commit-config.yaml
-
+```
 ```yaml
 repos:
   - repo: https://github.com/gitleaks/gitleaks
@@ -16,9 +16,10 @@ repos:
     hooks:
       - id: gitleaks
 ```
+```bash
 $ pre-commit install
 pre-commit installed at .git/hooks/pre-commit
-
+```
 2. Встановлюємо gitleaks:
 ```bash
 $ cd ..
