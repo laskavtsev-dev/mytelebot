@@ -20,11 +20,13 @@ $ pre-commit install
 pre-commit installed at .git/hooks/pre-commit
 
 2. Встановлюємо gitleaks:
+```bash
 $ cd ..
 $ git clone https://github.com/gitleaks/gitleaks.git
 $ cd gitleaks
 $ make build
 $ cp gitleaks /usr/local/bin
 $ gitleaks detect --source . --log-opts="--all"
+```
 
-3. Перевірка роботи: змінимо щось в helm/values
+4. Перевірка роботи: змінимо щось в helm/values
