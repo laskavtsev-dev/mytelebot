@@ -62,8 +62,104 @@ $ nano .git/hooks/pre-commit
 ```
 Додаємо наступне:
 ```code
+ENABLE_GITLEAKS=$(git config --bool hooks.gitleaks)
+if [ "$ENABLE_GITLEAKS" != "true" ]; then
+  echo "Gitleaks hook is disabled. Enable it by running:"
+  echo "git config --bool hooks.gitleaks true"
+  exit 0
+fi
 
+detect_os() {
+  if [ "$(uname)" = "Darwin" ]; then
+    OS='Darwin'
+  elif [ "$(uname)" = "Linux" ]; then
+    OS='Linux'
+  elif [ "$OS" = "Windows_NT" ]; then
+    OS='Windows'
+  else
+    OS='Unknown'
+  fi
+}
+
+detect_arch() {
+  case "$(uname -m)" in
+   'x86_64')
+      ARCH='x86_64'
+      ;;
+    'arm64')
+      ARCH='arm64'
+      ;;
+    *)
+      ARCH='Unknown'
+      ;;
+  esac
+}
+
+install_gitleaks() {
+  detect_os
+  detect_arch
+
+  if [ "$OS" = "Unknown" ]; then
+    echo "Unsupported OS: $OS"
+    exit 1
+  fi
+
+  if [ "$OS" = "Windows" ]; then
+    ARCH='x86_64'
+  fi
+
+  if [ "$ARCH" = "Unknown" ]; then
+    echo "Unsupported architecture: $ARCH"
+    exit 1
+  fi
+
+  case "$OS" in
+    'Linux')
+      if [ "$ARCH" = "x86_64" ]; then
+        URL="https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64"
+      elif [ "$ARCH" = "arm64" ]; then
+        URL="https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-arm64"
+      fi
+      ;;
+    'Darwin')
+      if [ "$ARCH" = "x86_64" ]; then
+        URL="https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-darwin-amd64"
+      elif [ "$ARCH" = "arm64" ]; then
+        URL="https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-darwin-arm64"
+      fi
+      ;;
+    'Windows')
+      URL="https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-windows-amd64.exe"
+      ;;
+  esac
+
+  echo "Downloading gitleaks from $URL..."
+  if [ "$OS" = "Windows" ]; then
+    curl -sSL $URL -o gitleaks.exe
+    mkdir -p "%LOCALAPPDATA%/gitleaks"
+    move gitleaks.exe "%LOCALAPPDATA%/gitleaks/gitleaks.exe"
+    GITLEAKS_PATH="%LOCALAPPDATA%/gitleaks/gitleaks.exe"
+  else
+    curl -sSL $URL -o gitleaks
+    chmod +x gitleaks
+    sudo mv gitleaks /usr/local/bin/gitleaks
+    GITLEAKS_PATH="gitleaks"
+  fi
+}
+
+if ! command -v gitleaks >/dev/null 2>&1 && ! command -v "$LOCALAPPDATA/gitleaks/gitleaks.exe" >/dev/null 2>&1; then
+  echo "Gitleaks not found, installing..."
+  install_gitleaks
+else
+  if [ "$OS" = "Windows" ]; then
+    GITLEAKS_PATH="$LOCALAPPDATA/gitleaks/gitleaks.exe"
+  else
+    GITLEAKS_PATH="gitleaks"
+  fi
+  echo "Gitleaks is already installed"
+fi
+
+exit 0
 ```
-6. 
-7. 
+
 
